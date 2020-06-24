@@ -103,18 +103,6 @@ download \
   "https://github.com/madler/zlib/archive/"
 
 download \
-  "last_x264.tar.bz2" \
-  "" \
-  "nil" \
-  "http://download.videolan.org/pub/videolan/x264/snapshots/"
-
-download \
-  "x265_2.7.tar.gz" \
-  "" \
-  "b0d7d20da2a418fa4f53a559946ea079" \
-  "https://bitbucket.org/multicoreware/x265/downloads/"
-
-download \
   "v0.1.6.tar.gz" \
   "fdk-aac.tar.gz" \
   "223d5f579d29fb0d019a775da4e0e061" \
@@ -261,21 +249,21 @@ fi
 PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
-echo "*** Building x264 ***"
-cd $BUILD_DIR/x264*
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" ./configure --prefix=$TARGET_DIR --enable-static --disable-shared --disable-opencl --enable-pic
-PATH="$BIN_DIR:$PATH" make -j $jval
-make install
+#echo "*** Building x264 ***"
+#cd $BUILD_DIR/x264*
+#[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+#[ ! -f config.status ] && PATH="$BIN_DIR:$PATH" ./configure --prefix=$TARGET_DIR --enable-static --disable-shared --disable-opencl --enable-pic
+#PATH="$BIN_DIR:$PATH" make -j $jval
+#make install
 
-echo "*** Building x265 ***"
-cd $BUILD_DIR/x265*
-cd build/linux
-[ $rebuild -eq 1 ] && find . -mindepth 1 ! -name 'make-Makefiles.bash' -and ! -name 'multilib.sh' -exec rm -r {} +
-PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DENABLE_SHARED:BOOL=OFF -DSTATIC_LINK_CRT:BOOL=ON -DENABLE_CLI:BOOL=OFF ../../source
-sed -i 's/-lgcc_s/-lgcc_eh/g' x265.pc
-make -j $jval
-make install
+#echo "*** Building x265 ***"
+#cd $BUILD_DIR/x265*
+#cd build/linux
+#[ $rebuild -eq 1 ] && find . -mindepth 1 ! -name 'make-Makefiles.bash' -and ! -name 'multilib.sh' -exec rm -r {} +
+#PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DENABLE_SHARED:BOOL=OFF -DSTATIC_LINK_CRT:BOOL=ON -DENABLE_CLI:BOOL=OFF ../../source
+#sed -i 's/-lgcc_s/-lgcc_eh/g' x265.pc
+#make -j $jval
+#make install
 
 echo "*** Building fdk-aac ***"
 cd $BUILD_DIR/fdk-aac*
@@ -450,8 +438,6 @@ if [ "$platform" = "linux" ]; then
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
-    --enable-libx264 \
-    --enable-libx265 \
     --enable-libxvid \
     --enable-libzimg \
     --enable-nonfree \
@@ -488,8 +474,6 @@ elif [ "$platform" = "darwin" ]; then
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libwebp \
-    --enable-libx264 \
-    --enable-libx265 \
     --enable-libxvid \
     --enable-libzimg \
     --enable-nonfree \
