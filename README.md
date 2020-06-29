@@ -1,3 +1,10 @@
+## Tunecore build instructions
+
+```
+$ docker build -t ffmpeg-static .
+$ docker run --rm -it -v `pwd`/build:/ffmpeg-static/build -v `pwd`/layer-output/bin:/ffmpeg-static/bin ffmpeg-static
+```
+
 FFmpeg static build
 ===================
 
